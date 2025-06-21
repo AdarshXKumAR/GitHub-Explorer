@@ -1,7 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Github, Moon, Sun, Bookmark } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 interface HeaderProps {
   onBookmarksClick: () => void;
@@ -20,16 +21,15 @@ export const Header: React.FC<HeaderProps> = ({ onBookmarksClick, bookmarkCount 
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-3"
+
+          {/* Clickable Logo & Title */}
+          <Link
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center space-x-3 no-underline"
           >
             <div className="relative">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl blur-sm opacity-30"
-              />
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl blur-sm opacity-30" />
               <div className="relative bg-gradient-to-r from-indigo-600 to-purple-600 p-2 rounded-xl">
                 <Github className="w-6 h-6 text-white" />
               </div>
@@ -42,12 +42,14 @@ export const Header: React.FC<HeaderProps> = ({ onBookmarksClick, bookmarkCount 
                 Discover Amazing Repositories
               </p>
             </div>
-          </motion.div>
+          </Link>
 
+
+          {/* Right Buttons */}
           <div className="flex items-center gap-3">
+
             {/* Bookmarks Button */}
             <motion.button
-              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onBookmarksClick}
               className="relative p-3 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -66,14 +68,13 @@ export const Header: React.FC<HeaderProps> = ({ onBookmarksClick, bookmarkCount 
 
             {/* Theme Toggle */}
             <motion.button
-              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={toggleTheme}
               className="relative p-3 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-700 overflow-hidden"
             >
               <motion.div
                 initial={false}
-                animate={{ 
+                animate={{
                   rotate: theme === 'dark' ? 180 : 0,
                   scale: theme === 'dark' ? 1.1 : 1
                 }}
@@ -86,18 +87,19 @@ export const Header: React.FC<HeaderProps> = ({ onBookmarksClick, bookmarkCount 
                   <Sun className="w-5 h-5 text-yellow-400" />
                 )}
               </motion.div>
-              
-              {/* Animated background */}
+
+              {/* Animated Background */}
               <motion.div
                 className="absolute inset-0 rounded-full"
                 animate={{
-                  background: theme === 'dark' 
-                    ? 'linear-gradient(45deg, #1f2937, #374151)' 
+                  background: theme === 'dark'
+                    ? 'linear-gradient(45deg, #1f2937, #374151)'
                     : 'linear-gradient(45deg, #f3f4f6, #e5e7eb)'
                 }}
                 transition={{ duration: 0.3 }}
               />
             </motion.button>
+
           </div>
         </div>
       </nav>
